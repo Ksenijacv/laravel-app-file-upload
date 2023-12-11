@@ -90,7 +90,7 @@ class PostController extends Controller
                 // Public storage
                 $storage = Storage::disk('public');
      
-                // Old iamge delete
+                // Old image delete
                 if($storage->exists($post->image))
                     $storage->delete($post->image);
      
