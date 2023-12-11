@@ -28,3 +28,6 @@ Route::post('posts', [PostController::class, 'store']);
 Route::put('posts/{id}', [PostController::class, 'update']);
 
 Route::delete('posts/{id}', [PostController::class, 'destroy']);
+
+//ruta za gledanje kesiranih postova
+Route::get('/cached-posts', [PostController::class, 'showCachedPosts']);

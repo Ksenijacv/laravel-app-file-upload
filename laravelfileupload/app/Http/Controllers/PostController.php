@@ -2,26 +2,40 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Http\Requests\PostStoreRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
     //prikaz svih postova
+    
+
     public function index()
     {
-       // All Post
-       $posts = Post::all();
-     
-       // Return Json Response
-       return response()->json([
-          'posts' => $posts
-       ],200);
+        $posts = Cache::remember('all_posts', now()->addDay(), function () {
+            return Post::all();
+        });
+    
+        return response()->json([
+            'posts' => $posts
+        ], 200);
     }
+
+    //funkcija za prikaz kesiranih postova
+    public function showCachedPosts()
+{
+    $cachedPosts = Cache::get('all_posts');
+    
+    return response()->json([
+        'cached_posts' => $cachedPosts
+    ], 200);
+}
 
 //kreiranje novog
     public function store(PostStoreRequest $request) //Kao argument prima instancu PostStoreRequest,
