@@ -161,6 +161,24 @@ class PostController extends Controller
         ],200);
     }
 
+    //export
+    public function generateAndSavePDF()
+{
+    $posts = Post::all();
+
+    $pdf = PDF::loadView('pdf.posts', compact('posts'));
+    $pdfContent = $pdf->output();
+
+    $filePath = 'pdfs/posts_' . time() . '.pdf'; // Definiši putanju i ime fajla
+
+    Storage::disk('local')->put($filePath, $pdfContent);
+
+    return response()->json([
+        'message' => 'PDF file generated and saved.',
+        'file_path' => $filePath, // Vrati putanju do sačuvanog fajla
+    ], 200);
+}
+
 
 
 }
