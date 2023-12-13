@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 
+use App\Exports\PostExport;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Http\Requests\PostStoreRequest;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 
 class PostController extends Controller
 {
@@ -175,6 +178,15 @@ class PostController extends Controller
             'message' => "Search results are:",
             'posts' => $posts
         ], 200);
+    }
+
+    //export funkcija
+    public function exportToCSV(){
+        return Excel::download(new PostExport, 'post-csv.csv');
+    }
+
+    public function exportToExcel(){
+        return Excel::download(new PostExport, 'post-excel.xlsx');
     }
 
     

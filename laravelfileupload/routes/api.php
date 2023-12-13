@@ -35,4 +35,10 @@ Route::get('/cached-posts', [PostController::class, 'showCachedPosts']);
 //search
 Route::get('/search/{name}', [PostController::class, 'search']);
 
+//export u csv
+Route::get('/export-csv', [PostController::class, 'exportToCSV']);
+
+//export u excel
+Route::get('/export-excel', [PostController::class, 'exportToExcel']);
+
 
