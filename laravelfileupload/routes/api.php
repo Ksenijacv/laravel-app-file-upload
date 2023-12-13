@@ -32,4 +32,7 @@ Route::delete('posts/{id}', [PostController::class, 'destroy']);
 //ruta za gledanje kesiranih postova
 Route::get('/cached-posts', [PostController::class, 'showCachedPosts']);
 
+//search
+Route::get('/search/{name}', [PostController::class, 'search']);
+
 

@@ -18,7 +18,7 @@ class PostFactory extends Factory
     {
        
         return [
-            "name" => $this->faker->sentence(),
+            "name" => $this->faker->word() . ' ' . $this->faker->word(),
             "image" => $this->faker->imageUrl(), 
             "description" =>  $this->faker->paragraph()
         ];

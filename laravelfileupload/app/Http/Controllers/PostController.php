@@ -161,23 +161,23 @@ class PostController extends Controller
         ],200);
     }
 
-    //export
-    public function generateAndSavePDF()
-{
-    $posts = Post::all();
+    //search radi i za slovo, i za celu rec i vraca i vise postova ako odgovaraju
+    //radi ako ima 2 reci u sebi
+    public function search($name)
+    {
+    $posts = Post::where('name', 'LIKE', '%' . $name . '%')->get();
 
-    $pdf = PDF::loadView('pdf.posts', compact('posts'));
-    $pdfContent = $pdf->output();
+    if ($posts->isEmpty()) {
+        return response()->json(['message' => 'No posts match the searched criteria.'], 404);
+        }
 
-    $filePath = 'pdfs/posts_' . time() . '.pdf'; // Definiši putanju i ime fajla
+        return response()->json([
+            'message' => "Search results are:",
+            'posts' => $posts
+        ], 200);
+    }
 
-    Storage::disk('local')->put($filePath, $pdfContent);
-
-    return response()->json([
-        'message' => 'PDF file generated and saved.',
-        'file_path' => $filePath, // Vrati putanju do sačuvanog fajla
-    ], 200);
-}
+    
 
 
 
