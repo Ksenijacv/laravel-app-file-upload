@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
+use App\Http\Controllers\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('posts', [PostController::class, 'index']); 
 
-Route::get('posts/{id}', [PostController::class, 'show']); 
+
 
 Route::post('posts', [PostController::class, 'store']); 
 
@@ -43,4 +45,14 @@ Route::get('/export-excel', [PostController::class, 'exportToExcel']);
 
 //prikaz sa paginacijom
 Route::get('posts-pagination', [PostController::class, 'indexWithPagination']); 
+
+//login i registracija
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+
+//testiranje rute za autentifikaciju
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('posts/{id}', [PostController::class, 'show']); 
+    Route::post('logout', [AuthController::class, 'logout']);
+});
 
