@@ -41,4 +41,6 @@ Route::get('/export-csv', [PostController::class, 'exportToCSV']);
 //export u excel
 Route::get('/export-excel', [PostController::class, 'exportToExcel']);
 
+//prikaz sa paginacijom
+Route::get('posts-pagination', [PostController::class, 'indexWithPagination']); 
 

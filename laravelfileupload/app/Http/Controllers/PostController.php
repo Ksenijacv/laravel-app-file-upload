@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Cache;
 use Maatwebsite\Excel\Facades\Excel;
 
 
-
 class PostController extends Controller
 {
     //prikaz svih postova
@@ -29,6 +28,17 @@ class PostController extends Controller
             'posts' => $posts
         ], 200);
     }
+
+    public function indexWithPagination()
+    {
+        $posts = Post::paginate(2); 
+    
+        return response()->json([
+            'posts' => $posts
+        ], 200);
+    }
+
+
 
     //funkcija za prikaz kesiranih postova
     public function showCachedPosts()
